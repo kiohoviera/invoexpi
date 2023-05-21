@@ -188,14 +188,6 @@ export default {
             this.success = false;
         }
     },
-
-    setup() {
-        function test() {
-
-        }
-
-        console.log(test())
-    }
 }
 </script>
 
