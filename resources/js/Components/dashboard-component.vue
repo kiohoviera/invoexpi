@@ -1,6 +1,5 @@
 <template>
     <div>
-        <button @click="cancel">cancel</button>
         <div class="row" v-if="!loading">
            <div class="col-md-12">
                <div class="col-md-12" v-show="error">
@@ -117,29 +116,9 @@ export default {
 
     mounted() {
         console.log('test');
-
-        const start = new Date().getTime();
-        const limit = start + (1800 * 1000);
-        this.rtlContent3 = setInterval(() => {
-            const now = new Date().getTime();
-            const distance = limit - now;
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            this.rtlContent3 = minutes + 'm ' + seconds + 's ';
-            console.log(this.rtlContent3);
-            if (distance === 0) {
-                clearInterval(this.rtlContent3);
-                this.rtlContent3 = null;
-            }
-        }, 1000);
-
     },
     methods:{
 
-        cancel() {
-            console.log(this.rtlContent3);
-            clearInterval(this.rtlContent3);
-        },
         getInventory() {
           axios.get('api/getInventory').then(response => {
               this.data = response.data;

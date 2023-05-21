@@ -2402,7 +2402,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -2443,32 +2442,13 @@ __webpack_require__.r(__webpack_exports__);
     this.getInventory();
   },
   mounted: function mounted() {
-    var _this = this;
     console.log('test');
-    var start = new Date().getTime();
-    var limit = start + 1800 * 1000;
-    this.rtlContent3 = setInterval(function () {
-      var now = new Date().getTime();
-      var distance = limit - now;
-      var minutes = Math.floor(distance % (1000 * 60 * 60) / (1000 * 60));
-      var seconds = Math.floor(distance % (1000 * 60) / 1000);
-      _this.rtlContent3 = minutes + 'm ' + seconds + 's ';
-      console.log(_this.rtlContent3);
-      if (distance === 0) {
-        clearInterval(_this.rtlContent3);
-        _this.rtlContent3 = null;
-      }
-    }, 1000);
   },
   methods: {
-    cancel: function cancel() {
-      console.log(this.rtlContent3);
-      clearInterval(this.rtlContent3);
-    },
     getInventory: function getInventory() {
-      var _this2 = this;
+      var _this = this;
       axios__WEBPACK_IMPORTED_MODULE_1___default().get('api/getInventory').then(function (response) {
-        _this2.data = response.data;
+        _this.data = response.data;
       });
       this.loading = false;
     },
@@ -2483,10 +2463,10 @@ __webpack_require__.r(__webpack_exports__);
       window.location.replace('/createInventory');
     },
     search: function search() {
-      var _this3 = this;
+      var _this2 = this;
       if (this.form['search'] !== '') {
         axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/searchInventory/' + this.form['search']).then(function (response) {
-          _this3.data = response.data;
+          _this2.data = response.data;
           console.log(response.data);
           console.log('search');
         });
@@ -2495,16 +2475,16 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     removeInventory: function removeInventory(id) {
-      var _this4 = this;
+      var _this3 = this;
       axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"]('/api/deleteSelected/' + id).then(function (response) {
         console.log(response);
         if (!response.data.deleted) {
-          _this4.error = true;
-          _this4.errorMsg = response.data.message;
+          _this3.error = true;
+          _this3.errorMsg = response.data.message;
         } else {
-          _this4.success = true;
-          _this4.successMsg = response.data.message;
-          _this4.getInventory();
+          _this3.success = true;
+          _this3.successMsg = response.data.message;
+          _this3.getInventory();
         }
       });
     },
@@ -2726,7 +2706,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     deleteSelected: function deleteSelected() {
       var _this5 = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]('/api/deleteSelected/' + this.logId).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/deleteSelected/', this.form).then(function (response) {
         if (!response.data.deleted) {
           _this5.error = true;
           _this5.errorMsg = response.data.message;
@@ -2737,6 +2717,8 @@ __webpack_require__.r(__webpack_exports__);
           _this5.error = false;
         }
       });
+      this.getExpiringInventory();
+      this.getExpiredInventory();
     },
     hide: function hide() {
       this.error = false;
@@ -31048,8 +31030,6 @@ var render = function () {
   return _c(
     "div",
     [
-      _c("button", { on: { click: _vm.cancel } }, [_vm._v("cancel")]),
-      _vm._v(" "),
       !_vm.loading
         ? _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-md-12" }, [
@@ -31546,7 +31526,7 @@ var render = function () {
                       ),
                       _vm._v(" "),
                       _c("p", { staticClass: "mb-1" }, [
-                        _vm._v("Barcode: " + _vm._s(inv.barcode)),
+                        _vm._v("Barcode: " + _vm._s(inv.serial_number)),
                       ]),
                       _vm._v(" "),
                       _c("p", { staticClass: "mb-1" }, [
@@ -31629,7 +31609,7 @@ var render = function () {
                       ),
                       _vm._v(" "),
                       _c("p", { staticClass: "mb-1" }, [
-                        _vm._v("Barcode: " + _vm._s(inv.barcode)),
+                        _vm._v("Barcode: " + _vm._s(inv.serial_number)),
                       ]),
                       _vm._v(" "),
                       _c("p", { staticClass: "mb-1" }, [

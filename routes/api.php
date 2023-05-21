@@ -26,4 +26,4 @@ Route::post('/scanLogs', [\App\Http\Controllers\InventoriesController::class, 'p
 Route::get('updateScanLogs', [\App\Http\Controllers\InventoriesController::class, 'updateScanLogs']);
 
 Route::delete('deleteExpiredInventory', [\App\Http\Controllers\InventoriesController::class, 'deleteExpiredInventory']);
-Route::delete('deleteSelected/{id}', [\App\Http\Controllers\InventoriesController::class, 'destroy']);
+Route::post('deleteSelected', [\App\Http\Controllers\InventoriesController::class, 'destroy']);

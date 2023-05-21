@@ -70,6 +70,7 @@ class InventoriesController extends Controller
          */
 
         $inventory = Inventories::whereDate('expiration_date', '<', Carbon::now()->addDays(5))
+            ->whereDate('expiration_date', '>', Carbon::now())
             ->latest()
             ->get();
 
@@ -259,21 +260,25 @@ class InventoriesController extends Controller
      * @param $id
      * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
 
-        $inventory = Inventories::find($id);
+        $inventory = Inventories::where('serial_number', $request->post('serial_number'))
+            ->where('location', $request->post('location'))
+            ->first();
+
         if ($inventory){
-            $inventory->delete();
+            Inventories::find($inventory->id)
+                ->delete();
             return response()->json([
-                'message' => 'Deleted Successfully',
+                'message' => 'Inventory Deleted Successfully',
                 'deleted' => true
             ]);
         }
 
         return response()->json([
-            'message' => 'Inventory No Longer Exists',
+            'message' => 'No Inventory Found',
             'deleted' => false
         ]);
     }

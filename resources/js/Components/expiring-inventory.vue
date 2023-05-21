@@ -61,7 +61,7 @@
                                         <h6 class="mb-2">{{ inv.product_name }}</h6>
                                         <small>Exp : {{ inv.expiration_date }}</small>
                                     </div>
-                                    <p class="mb-1">Barcode: {{ inv.barcode }}</p>
+                                    <p class="mb-1">Barcode: {{ inv.serial_number }}</p>
                                     <p class="mb-1">SKU: {{ inv.sku }}</p>
                                     <p class="mb-1">Location: {{ inv.location }}</p>
                                     <p class="mb-1">Quantity: {{ inv.quantity }}</p>
@@ -92,7 +92,7 @@
                                         <h6 class="mb-2">{{ inv.product_name }}</h6>
                                         <small>Exp : {{ inv.expiration_date }}</small>
                                     </div>
-                                    <p class="mb-1">Barcode: {{ inv.barcode }}</p>
+                                    <p class="mb-1">Barcode: {{ inv.serial_number }}</p>
                                     <p class="mb-1">SKU: {{ inv.sku }}</p>
                                     <p class="mb-1">Location: {{ inv.location }}</p>
                                     <p class="mb-1">Quantity: {{ inv.quantity }}</p>
@@ -110,7 +110,6 @@
 <script>
 
 import axios from "axios";
-
 export default {
     name: "dashboard",
 
@@ -205,7 +204,7 @@ export default {
         },
 
         deleteSelected() {
-            axios.delete('/api/deleteSelected/' + this.logId).then(response => {
+            axios.post('/api/deleteSelected/', this.form).then(response => {
                 if (!response.data.deleted) {
                     this.error = true;
                     this.errorMsg = response.data.message
@@ -216,6 +215,9 @@ export default {
                     this.error = false;
                 }
             });
+
+            this.getExpiringInventory();
+            this.getExpiredInventory();
         },
 
         hide() {
