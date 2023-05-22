@@ -204,7 +204,7 @@ export default {
         },
 
         deleteSelected() {
-            axios.post('/api/deleteSelected/', this.form).then(response => {
+            axios.post('/api/deleteSelected', this.form).then(response => {
                 if (!response.data.deleted) {
                     this.error = true;
                     this.errorMsg = response.data.message
