@@ -2706,7 +2706,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     deleteSelected: function deleteSelected() {
       var _this5 = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/deleteSelected/', this.form).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/deleteSelected', this.form).then(function (response) {
         if (!response.data.deleted) {
           _this5.error = true;
           _this5.errorMsg = response.data.message;
